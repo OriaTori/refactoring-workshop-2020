@@ -40,6 +40,8 @@ struct DisplayInd
     int x;
     int y;
     Cell value;
+    DisplayInd() = default;
+    DisplayInd(int l_x, int l_y, Cell l_value): x(l_x), y(l_y), value(l_value){}
 };
 
 struct FoodInd
