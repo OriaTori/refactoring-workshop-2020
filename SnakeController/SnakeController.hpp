@@ -12,6 +12,13 @@ class IPort;
 
 namespace Snake
 {
+struct Segment
+{
+    int x;
+    int y;
+};
+
+
 struct ConfigurationError : std::logic_error
 {
     ConfigurationError();
@@ -40,21 +47,17 @@ private:
     std::pair<int, int> m_mapDimension;
     std::pair<int, int> m_foodPosition;
 
-    struct Segment
-    {
-        int x;
-        int y;
-    };
-
     std::list<Segment> m_segments;
-    Direction m_currentDirection;
 
+    Direction m_currentDirection;
+    //--Map
     void handleTimeoutInd();
     void handleDirectionInd(std::unique_ptr<Event>);
     void handleFoodInd(std::unique_ptr<Event>);
     void handleFoodResp(std::unique_ptr<Event>);
     void handlePauseInd(std::unique_ptr<Event>);
 
+    //---Player
     bool isSegmentAtPosition(int x, int y) const;
     Segment calculateNewHead() const;
     void updateSegmentsIfSuccessfullMove(Segment const& newHead);
