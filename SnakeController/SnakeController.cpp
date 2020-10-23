@@ -77,21 +77,13 @@ void Controller::sendPlaceNewFood(int x, int y)
 {
     m_foodPosition = std::make_pair(x, y);
 
-    DisplayInd placeNewFood;
-    placeNewFood.x = x;
-    placeNewFood.y = y;
-    placeNewFood.value = Cell_FOOD;
-
+    DisplayInd placeNewFood(x, y, Cell_FOOD);
     m_displayPort.send(std::make_unique<EventT<DisplayInd>>(placeNewFood));
 }
 
 void Controller::sendClearOldFood()
 {
-    DisplayInd clearOldFood;
-    clearOldFood.x = m_foodPosition.first;
-    clearOldFood.y = m_foodPosition.second;
-    clearOldFood.value = Cell_FREE;
-
+    DisplayInd clearOldFood(m_foodPosition.first, m_foodPosition.second, Cell_FREE);
     m_displayPort.send(std::make_unique<EventT<DisplayInd>>(clearOldFood));
 }
 
@@ -133,11 +125,7 @@ Controller::Segment Controller::calculateNewHead() const
 void Controller::removeTailSegment()
 {
     auto tail = m_segments.back();
-
-    DisplayInd l_evt;
-    l_evt.x = tail.x;
-    l_evt.y = tail.y;
-    l_evt.value = Cell_FREE;
+    DisplayInd l_evt(tail.x, tail.y, Cell_FREE);
     m_displayPort.send(std::make_unique<EventT<DisplayInd>>(l_evt));
 
     m_segments.pop_back();
@@ -146,12 +134,7 @@ void Controller::removeTailSegment()
 void Controller::addHeadSegment(Segment const& newHead)
 {
     m_segments.push_front(newHead);
-
-    DisplayInd placeNewHead;
-    placeNewHead.x = newHead.x;
-    placeNewHead.y = newHead.y;
-    placeNewHead.value = Cell_SNAKE;
-
+    DisplayInd placeNewHead(newHead.x, newHead.y,Cell_SNAKE);
     m_displayPort.send(std::make_unique<EventT<DisplayInd>>(placeNewHead));
 }
 

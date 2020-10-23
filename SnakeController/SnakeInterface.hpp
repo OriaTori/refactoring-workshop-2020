@@ -36,7 +36,8 @@ enum Cell
 struct DisplayInd
 {
     static constexpr std::uint32_t MESSAGE_ID = 0x30;
-
+    DisplayInd() = default;
+    DisplayInd(int l_x, int l_y, Cell l_value): x(l_x), y(l_y), value(l_value){}
     int x;
     int y;
     Cell value;
