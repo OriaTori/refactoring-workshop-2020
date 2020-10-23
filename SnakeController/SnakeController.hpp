@@ -69,6 +69,8 @@ private:
     void sendPlaceNewFood(int x, int y);
 
     bool m_paused;
+
+    void changeDirection(char d);
 };
 
 } // namespace Snake
